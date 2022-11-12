@@ -6,7 +6,8 @@
 #include <math.h>
 #include <dos.h>
 
-int N = 15;
+int LENGTH = 15;
+int WIDTH = 15;
 int size_square = 50;
 int** field;
 float ATTACK_WEIGHT[6][3];
@@ -41,21 +42,20 @@ void drawField() {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.0f, 0.0f, 0.0f);
 
-    for (int i = 0; i <= N; i++) {
+    for (int i = 0; i <= LENGTH; i++) {
         glVertex2f(i* size_square, 0);//координата начала отрезка в формате (x,y)
-        glVertex2f(i* size_square, N*size_square);//координата конца отрезка
+        glVertex2f(i* size_square, WIDTH *size_square);//координата конца отрезка
     }
-    for (int i = 0; i <= N; i++) {
+    for (int i = 0; i <= WIDTH; i++) {
         glVertex2f(0,i * size_square);//координата начала отрезка в формате (x,y)
-        glVertex2f(N*size_square, i * size_square);//координата конца отрезка
+        glVertex2f(LENGTH*size_square, i * size_square);//координата конца отрезка
     }
     //glEnd();
 }
 
 void drawSigns() {
-    for (int i = 0; i < N; i++) {
-        i++;
-        for (int j = 0; j < N; j++) {
+    for (int i = 0; i < LENGTH; i++) {
+        for (int j = 0; j < WIDTH; j++) {
             if (field[i][j] == 1) {
                 glColor3f(1.0f, 0.0f, 0.0f);
                 float pointX = i * size_square;
@@ -83,7 +83,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= N)) break; if ((field[x + i][y] != step))break;
+        if ((x + i >= LENGTH)) break; if ((field[x + i][y] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -97,7 +97,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((y + i >= N)) break; if ((field[x][y + i] != step))break;
+        if ((y + i >= WIDTH)) break; if ((field[x][y + i] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -111,7 +111,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= N) || (y + i >= N)) break; if ((field[x + i][y + i] != step))break;
+        if ((x + i >= LENGTH) || (y + i >= WIDTH)) break; if ((field[x + i][y + i] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -121,11 +121,11 @@ void control(int x, int y, STEP step) {
     k = 0;
 
     for (int i = 1; i < 5; i++) {
-        if ((x - i < 0) || (y + i >= N)) break; if ((field[x - i][y + i] != step))break;
+        if ((x - i < 0) || (y + i >= WIDTH)) break; if ((field[x - i][y + i] != step))break;
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= N) || (y - i < 0)) break; if ((field[x + i][y - i] != step))break;
+        if ((x + i >= LENGTH) || (y - i < 0)) break; if ((field[x + i][y - i] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -145,8 +145,8 @@ void botStep(STEP step) {
     float tmpAttack = 0;
 
 
-    for (int x = 0; x < N; x++) {
-        for (int y = 0; y < N; y++) {
+    for (int x = 0; x < LENGTH; x++) {
+        for (int y = 0; y < WIDTH; y++) {
             if (field[x][y] != 0)continue;
             tmpAttack = 0;
 
@@ -160,7 +160,7 @@ void botStep(STEP step) {
                 if (field[x - i][y] == step) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((x + i >= N)) break;
+                if ((x + i >= LENGTH)) break;
                 if (field[x + i][y] == 0) {
                     potenc++;
                     break;
@@ -183,7 +183,7 @@ void botStep(STEP step) {
                 if (field[x][y - i] == step) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N)) break;
+                if ((y + i >= WIDTH)) break;
                 if (field[x][y + i] == 0) {
                     potenc++;
                     break;
@@ -207,7 +207,7 @@ void botStep(STEP step) {
                 if (field[x - i][y - i] == step) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N) || (x + i >= N)) break;
+                if ((y + i >= WIDTH) || (x + i >= LENGTH)) break;
                 if (field[x + i][y + i] == 0) {
                     potenc++;
                     break;
@@ -220,7 +220,7 @@ void botStep(STEP step) {
             potenc = 0;
 
             for (int i = 1; i < 5; i++) {
-                if ((y - i < 0) || (x + i >= N)) break;
+                if ((y - i < 0) || (x + i >= LENGTH)) break;
                 if (field[x + i][y - i] == 0) {
                     potenc++;
                     break;
@@ -229,7 +229,7 @@ void botStep(STEP step) {
                 if (field[x + i][y - i] == step) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N) || (x - i < 0)) break;
+                if ((y + i >= WIDTH) || (x - i < 0)) break;
                 if (field[x - i][y + i] == 0) {
                     potenc++;
                     break;
@@ -259,7 +259,7 @@ void botStep(STEP step) {
                 if (field[x - i][y] == Playerstep) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((x + i >= N)) break;
+                if ((x + i >= LENGTH)) break;
                 if (field[x + i][y] == 0) {
                     potenc++;
                     break;
@@ -282,7 +282,7 @@ void botStep(STEP step) {
                 if (field[x][y - i] == Playerstep) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N)) break;
+                if ((y + i >= WIDTH)) break;
                 if (field[x][y + i] == 0) {
                     potenc++;
                     break;
@@ -306,7 +306,7 @@ void botStep(STEP step) {
                 if (field[x - i][y - i] == Playerstep) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N) || (x + i >= N)) break;
+                if ((y + i >= WIDTH) || (x + i >= LENGTH)) break;
                 if (field[x + i][y + i] == 0) {
                     potenc++;
                     break;
@@ -319,7 +319,7 @@ void botStep(STEP step) {
             potenc = 0;
 
             for (int i = 1; i < 5; i++) {
-                if ((y - i < 0) || (x + i >= N)) break;
+                if ((y - i < 0) || (x + i >= LENGTH)) break;
                 if (field[x + i][y - i] == 0) {
                     potenc++;
                     break;
@@ -328,7 +328,7 @@ void botStep(STEP step) {
                 if (field[x + i][y - i] == Playerstep) mosh++;
             }
             for (int i = 1; i < 5; i++) {
-                if ((y + i >= N) || (x - i < 0)) break;
+                if ((y + i >= WIDTH) || (x - i < 0)) break;
                 if (field[x - i][y + i] == 0) {
                     potenc++;
                     break;
@@ -380,21 +380,31 @@ void mousePressed(int button, int state, int ax, int ay) {
             dY = ay - dY;
         }
         if ((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)) {
+            if ((((ax - X) / size_square) > LENGTH) || (((ax - X) / size_square) < 0) ||
+                (((ay - Y) / size_square) > WIDTH) || (((ay - Y) / size_square) < 0))
+                return;
             if (field[(ax - X) / size_square][(ay - Y) / size_square] == 0) {
                 field[(ax - X) / size_square][(ay - Y) / size_square] = Playerstep;
                 control((ax - X) / size_square, (ay - Y) / size_square, Playerstep);
-                if ((N - ((ax - X) / size_square) < 3) || (N - ((ay - Y) / size_square) < 3)) {
+                
 
-                    field = (int**)realloc(field, sizeof(int*) * (N + 5));
-                    for (int i = 0; i < N; i++) {
-                        field[i] = (int*)realloc(field[i], sizeof(int) * (N + 5));
-                        for (int j = 0; j < 5; j++) field[i][N + j] = 0;
-                    }
+                if (LENGTH - ((ax - X) / size_square) < 3) {
+
+                    field = (int**)realloc(field, sizeof(int*) * (LENGTH + 5));
                     for (int i = 0; i < 5; i++) {
-                        field[i + N] = (int*)calloc(N + 5, sizeof(int));
+                        field[i + LENGTH] = (int*)calloc(WIDTH, sizeof(int));
                     }
-                    N += 5;
+                    LENGTH += 5;
                 }
+                if (WIDTH - ((ay - Y) / size_square) < 3) {
+                    for (int i = 0; i < LENGTH; i++) {
+                        field[i] = (int*)realloc(field[i], sizeof(int) * (WIDTH+5));
+                        for (int j = 0; j < 5; j++) field[i][WIDTH + j] = 0;
+                    }
+                    WIDTH += 5;
+                }
+
+
                 botStep(Botstep);
             }
         }
@@ -485,9 +495,9 @@ int main(int argc, char** argv)
 
     ATTACK_WEIGHT[5][0] = 200;
 
-    field = (int**)malloc(N * sizeof(int*));
-    for (int i = 0; i < N; i++) {
-        field[i] = (int*)calloc(N , sizeof(int)); 
+    field = (int**)malloc(LENGTH * sizeof(int*));
+    for (int i = 0; i < LENGTH; i++) {
+        field[i] = (int*)calloc(WIDTH, sizeof(int));
     }
     
     glutInit(&argc, argv);//начальная инициализация окна
