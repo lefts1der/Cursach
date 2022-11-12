@@ -54,6 +54,7 @@ void drawField() {
 
 void drawSigns() {
     for (int i = 0; i < N; i++) {
+        i++;
         for (int j = 0; j < N; j++) {
             if (field[i][j] == 1) {
                 glColor3f(1.0f, 0.0f, 0.0f);
