@@ -421,6 +421,7 @@ void mousePressed(int button, int state, int ax, int ay) {
 
 void display()
 {
+    float pi_720 = 3.14 / 720;
     if(Playerstep==0){
     glBegin(GL_LINES);
     glColor3f(0.0f, 0.0f, 0.0f);
@@ -434,7 +435,7 @@ void display()
 
     glColor3f(0.0f, 0.0f, 1.0f);
     for (int k = 0; k < 1440; k++) {
-        glVertex2f(750, 500); glVertex2f(750 + cos((double)k * 3.14 / 720) * 250, 500 + sin((double)k * 3.14 / 720) * 250);
+        glVertex2f(750, 500); glVertex2f(750 + cos((double)k * pi_720) * 250, 500 + sin((double)k * pi_720) * 250);
     }
 
     glEnd();
@@ -467,8 +468,9 @@ void display()
             }
             else {
                 glColor3f(0.0f, 0.0f, 1.0f);
+                
                 for (int k = 0; k < 1440; k++) {
-                    glVertex2f(500, 250); glVertex2f(500 + cos((double)k * 3.14 / 720) * 250, 250 + sin((double)k * 3.14 / 720) * 250);
+                    glVertex2f(500, 250); glVertex2f(500 + cos((double)k * pi_720) * 250, 250 + sin((double)k * pi_720) * 250);
                 }
             }
             glEnd();
