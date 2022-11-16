@@ -71,7 +71,7 @@ void drawSigns() {
                 float centerY = size_square * (j + 0.5);
                 float pi_180 = 3.14 / 180;
                 for (int k = 0; k < 360; k++) {
-                    glVertex2f(centerX, centerY); glVertex2f(centerX + cos((double)k * pi_180) * (size_square / 2), centerY + sin((double)k * pi_180) * (size_square / 2));
+                    glVertex2f(centerX, centerY); glVertex2f(centerX + cos((double)k * pi_180) * (size_square >> 1), centerY + sin((double)k * pi_180) * (size_square >> 1));
                 }
             }
         }
