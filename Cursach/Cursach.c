@@ -79,25 +79,11 @@ void control(int x, int y, STEP step) {
     int k = 0;
 
     for (int i = 1; i < 5; i++) {
-        if ((x - i < 0)) break; if ((field[x - i][y] != step))break;
+        if ((x - i < 0) || (field[x - i][y] != step))break;
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= LENGTH)) break; if ((field[x + i][y] != step))break;
-        k++;
-    }
-    if (k >= 4) {
-        if (step == CROSS) win = CROSS;
-        else win = CIRCLE;
-    }
-    k = 0;
-
-    for (int i = 1; i < 5; i++) {
-        if ((y - i < 0)) break; if ((field[x][y - i] != step))break;
-        k++;
-    }
-    for (int i = 1; i < 5; i++) {
-        if ((y + i >= WIDTH)) break; if ((field[x][y + i] != step))break;
+        if ((x + i >= LENGTH) || (field[x + i][y] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -107,11 +93,11 @@ void control(int x, int y, STEP step) {
     k = 0;
 
     for (int i = 1; i < 5; i++) {
-        if ((x - i < 0) || (y - i < 0)) break; if ((field[x - i][y - i] != step))break;
+        if ((y - i < 0)||(field[x][y - i] != step))break;
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= LENGTH) || (y + i >= WIDTH)) break; if ((field[x + i][y + i] != step))break;
+        if ((y + i >= WIDTH)||(field[x][y + i] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -121,11 +107,25 @@ void control(int x, int y, STEP step) {
     k = 0;
 
     for (int i = 1; i < 5; i++) {
-        if ((x - i < 0) || (y + i >= WIDTH)) break; if ((field[x - i][y + i] != step))break;
+        if ((x - i < 0) || (y - i < 0) || (field[x - i][y - i] != step))break;
         k++;
     }
     for (int i = 1; i < 5; i++) {
-        if ((x + i >= LENGTH) || (y - i < 0)) break; if ((field[x + i][y - i] != step))break;
+        if ((x + i >= LENGTH) || (y + i >= WIDTH)||(field[x + i][y + i] != step))break;
+        k++;
+    }
+    if (k >= 4) {
+        if (step == CROSS) win = CROSS;
+        else win = CIRCLE;
+    }
+    k = 0;
+
+    for (int i = 1; i < 5; i++) {
+        if ((x - i < 0) || (y + i >= WIDTH)||(field[x - i][y + i] != step))break;
+        k++;
+    }
+    for (int i = 1; i < 5; i++) {
+        if ((x + i >= LENGTH) || (y - i < 0)||(field[x + i][y - i] != step))break;
         k++;
     }
     if (k >= 4) {
@@ -150,6 +150,7 @@ void botStep(STEP step) {
             if (field[x][y] != 0)continue;
             tmpAttack = 0;
 
+            //gorizontal
             for (int i = 1; i < 5; i++) {
                 if ((x - i < 0)) break;
                 if (field[x - i][y] == 0) {
@@ -172,7 +173,7 @@ void botStep(STEP step) {
             mosh = 1;
             potenc = 0;
 
-
+            // Vertical
             for (int i = 1; i < 5; i++) {
                 if ((y - i < 0)) break;
                 if (field[x][y - i] == 0) {
@@ -196,7 +197,7 @@ void botStep(STEP step) {
             potenc = 0;
 
 
-
+            // diagonal
             for (int i = 1; i < 5; i++) {
                 if ((y - i < 0) || (x - i < 0)) break;
                 if (field[x - i][y - i] == 0) {
