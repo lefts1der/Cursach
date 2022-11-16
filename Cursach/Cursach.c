@@ -54,16 +54,18 @@ void drawField() {
 }
 
 void drawSigns() {
+    int* field_i;
     for (int i = 0; i < LENGTH; i++) {
+        field_i = field[i];
         for (int j = 0; j < WIDTH; j++) {
-            if (field[i][j] == 1) {
+            if (field_i[j] == 1) {
                 glColor3f(1.0f, 0.0f, 0.0f);
                 float pointX = i * size_square;
                 float pointY = j * size_square;
                 glVertex2f(pointX, pointY); glVertex2f(pointX + size_square, pointY + size_square);
                 glVertex2f(pointX, pointY + size_square); glVertex2f(pointX + size_square, pointY);
             }
-            if (field[i][j] == 2) {
+            if (field_i[j] == 2) {
                 glColor3f(0.0f, 0.0f, 1.0f);
                 float centerX = size_square * (i + 0.5);
                 float centerY = size_square * (j + 0.5);
