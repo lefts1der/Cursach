@@ -87,8 +87,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     if (k >= 4) {
-        if (step == CROSS) win = CROSS;
-        else win = CIRCLE;
+        win = step;
     }
     k = 0;
 
@@ -101,8 +100,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     if (k >= 4) {
-        if (step == CROSS) win = CROSS;
-        else win = CIRCLE;
+        win = step;
     }
     k = 0;
 
@@ -115,8 +113,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     if (k >= 4) {
-        if (step == CROSS) win = CROSS;
-        else win = CIRCLE;
+        win = step;
     }
     k = 0;
 
@@ -129,8 +126,7 @@ void control(int x, int y, STEP step) {
         k++;
     }
     if (k >= 4) {
-        if (step == CROSS) win = CROSS;
-        else win = CIRCLE;
+        win = step;
     }
     k = 0;
 }
