@@ -388,15 +388,23 @@ void mousePressed(int button, int state, int ax, int ay) {
                 if (LENGTH - ((ax - X) / size_square) < 3) {
 
                     field = (int**)realloc(field, sizeof(int*) * (LENGTH + 5));
-                    for (int i = 0; i < 5; i++) {
-                        field[i + LENGTH] = (int*)calloc(WIDTH, sizeof(int));
-                    }
+                    
+                    field[LENGTH] = (int*)calloc(WIDTH, sizeof(int));
+                    field[LENGTH + 1] = (int*)calloc(WIDTH, sizeof(int));
+                    field[LENGTH + 2] = (int*)calloc(WIDTH, sizeof(int));
+                    field[LENGTH + 3] = (int*)calloc(WIDTH, sizeof(int));
+                    field[LENGTH + 4] = (int*)calloc(WIDTH, sizeof(int));
+                    
                     LENGTH += 5;
                 }
                 if (WIDTH - ((ay - Y) / size_square) < 3) {
                     for (int i = 0; i < LENGTH; i++) {
                         field[i] = (int*)realloc(field[i], sizeof(int) * (WIDTH+5));
-                        for (int j = 0; j < 5; j++) field[i][WIDTH + j] = 0;
+                        field[i][WIDTH] = 0;
+                        field[i][WIDTH + 1] = 0;
+                        field[i][WIDTH + 2] = 0;
+                        field[i][WIDTH + 3] = 0;
+                        field[i][WIDTH + 4] = 0;
                     }
                     WIDTH += 5;
                 }
