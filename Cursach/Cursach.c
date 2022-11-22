@@ -356,6 +356,7 @@ void botStep(STEP step) {
 }
 
 void mousePressed(int button, int state, int ax, int ay) {
+    if (win) return;
     if (Playerstep == 0) {
         if ((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)) {
             if (ax < 500) {
@@ -456,8 +457,27 @@ void display()
             Y += dY;
             dX = 0;
             dY = 0;
+            int dXX = dX;
+            __asm {
+
+                mov eax, X;
+                add eax, dXX;
+                mov X, eax;
+
+
+                mov eax, Y;
+                add eax, dY;
+                mov Y, eax;
+                
+                mov dX, 0;
+                 
+                mov dY, 0;
+            }
+            
         }
         else {
+            dX = 0;
+            dY = 0;
             glTranslatef(-X, -Y, 0);
             glBegin(GL_LINES);
             if (win == CROSS) {
