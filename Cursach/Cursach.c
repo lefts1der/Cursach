@@ -384,8 +384,8 @@ void mousePressed(int button, int state, int ax, int ay) {
             dY = ay - dY;
         }
         if ((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)) {
-            if ((((ax - X) / size_square) > LENGTH) || (((ax - X) / size_square) < 0) ||
-                (((ay - Y) / size_square) > WIDTH) || (((ay - Y) / size_square) < 0))
+            if ((((ax - X) / size_square) >= LENGTH) || (((ax - X) / size_square) < 0) ||
+                (((ay - Y) / size_square) >= WIDTH) || (((ay - Y) / size_square) < 0))
                 return;
             if (field[(ax - X) / size_square][(ay - Y) / size_square] == 0) {
                 field[(ax - X) / size_square][(ay - Y) / size_square] = Playerstep;
