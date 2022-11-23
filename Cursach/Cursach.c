@@ -6,6 +6,11 @@
 #include <math.h>
 #include <dos.h>
 
+int X = 0;
+int Y = 0;
+int ddX = -1;
+int dY = 0;
+
 int LENGTH = 15;
 int WIDTH = 15;
 int size_square = 50;
@@ -16,12 +21,10 @@ float ATTACK_WEIGHT[6][3];
 
 // 1 - крестик, 2 - нолик
 
-int dX = 0;
-int dY = 0;
+
 int leftPress = 0;
 
-int X = 0;
-int Y = 0;
+
 typedef enum Tstep {
     CROSS =1,
     CIRCLE =2,
@@ -373,11 +376,11 @@ void mousePressed(int button, int state, int ax, int ay) {
     }
     else {
         if ((button == GLUT_RIGHT_BUTTON) && (state == GLUT_DOWN)) {
-            dX = ax;
+            ddX = ax;
             dY = ay;
         }
         if ((button == GLUT_RIGHT_BUTTON) && (state == GLUT_UP)) {
-            dX = ax - dX;
+            ddX = ax - ddX;
             dY = ay - dY;
         }
         if ((button == GLUT_LEFT_BUTTON) && (state == GLUT_DOWN)) {
@@ -445,7 +448,7 @@ void display()
     else {
 
         if (win == 0) {
-            glTranslatef(dX, dY, 0);
+            glTranslatef(ddX, dY, 0);
             glBegin(GL_LINES);
             drawField();
             drawSigns();
@@ -453,32 +456,24 @@ void display()
 
             glutSwapBuffers();//прорисовываем буфер на экран/* рисуем что нибудь */
             glClear(GL_COLOR_BUFFER_BIT);
-            X += dX;
-            Y += dY;
-            dX = 0;
-            dY = 0;
-            int dXX = dX;
+
+
             __asm {
+                mov eax, ddX;
+                add X, eax;
+                xor ddX, eax;
 
-                mov eax, X;
-                add eax, dXX;
-                mov X, eax;
-
-
-                mov eax, Y;
-                add eax, dY;
-                mov Y, eax;
-                
-                mov dX, 0;
-                 
-                mov dY, 0;
+                mov eax, dY;
+                add Y, eax;
+                xor dY, eax;
             }
             
         }
         else {
-            dX = 0;
-            dY = 0;
             glTranslatef(-X, -Y, 0);
+            X = 0;
+            Y = 0;
+
             glBegin(GL_LINES);
             if (win == CROSS) {
 
